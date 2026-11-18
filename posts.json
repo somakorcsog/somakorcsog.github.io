@@ -862,6 +862,10 @@
       {
         "label": "Less is more",
         "text": "It feels like too much information now. Maybe less is better: remove what is too much or badly placed, and make the start of an opened assignment look less odd, because everything is centred."
+      },
+      {
+        "label": "Lines and clock back",
+        "text": "Bring back the three lines that move when you touch them with the mouse, and the live clock."
       }
     ]
   },

@@ -684,3 +684,7 @@ article > .article-head.container, article > .article-cover.container, article >
 .article-head .meta { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
 .article-cover .cover-art { min-height: 180px; }
 .article-body { padding-top: 44px; }
+
+/* Hero lines + live clock (back by request, Nov 18) */
+.hero-field { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.glance-clock { display: inline-flex; align-items: center; gap: 7px; font-variant-numeric: tabular-nums; font-weight: 500; }

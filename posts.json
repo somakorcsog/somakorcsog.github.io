@@ -866,6 +866,10 @@
       {
         "label": "Lines and clock back",
         "text": "Bring back the three lines that move when you touch them with the mouse, and the live clock."
+      },
+      {
+        "label": "Video and letter filter",
+        "text": "Make the video in \"How Does the Economy Work?\" watchable, because I can't see it. And on the key terms page, picking a letter should show only the terms that start with that letter, not just jump to them."
       }
     ]
   },

@@ -3,7 +3,7 @@
 (function () {
   "use strict";
 
-  var state = { data: null, filter: "all", query: "", glossaryQuery: "", view: "list" };
+  var state = { data: null, filter: "all", query: "", glossaryQuery: "", glossaryLetter: "", view: "list" };
   try { if (localStorage.getItem("view") === "cards") state.view = "cards"; } catch (e) {}
   var app = document.getElementById("app");
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -156,7 +156,6 @@
       var source = video.querySelector("source");
       if (source) source.addEventListener("error", swap);
       video.addEventListener("error", swap);
-      if (video.networkState === 3) swap();
     });
     root.querySelectorAll("[data-quiz]").forEach(function (quiz) {
       var qs = quiz.querySelectorAll(".q"), done = 0, right = 0, score = quiz.querySelector("[data-score]");
@@ -457,17 +456,22 @@
     app.innerHTML = pageHead("Key terms", "Key terms,", "Every important word from my assignments, explained in one sentence.", "simply explained.") +
       '<div class="container"><div class="glossary-tools"><label class="search-wrap"><span class="sr-only">Search the key terms</span>' + SEARCH_ICON +
       '<input id="glossary-search" class="search" type="search" placeholder="Search terms, e.g. GDP" value="' + esc(state.glossaryQuery) + '"></label>' +
-      '<div class="az">' + "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(function (l) {
-        return letters[l] ? '<button type="button" data-letter="' + l + '">' + l + "</button>" : '<span>' + l + "</span>";
+      '<div class="az" role="group" aria-label="Filter by first letter"><button type="button" class="az-all" data-letter="" aria-pressed="' + !state.glossaryLetter + '">All</button>' + "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(function (l) {
+        return letters[l] ? '<button type="button" data-letter="' + l + '" aria-pressed="' + (state.glossaryLetter === l) + '">' + l + "</button>" : '<span aria-hidden="true">' + l + "</span>";
       }).join("") + '</div><span class="glossary-count" id="glossary-count"></span></div>' +
       '<dl class="glossary" id="glossary-list"></dl></div>';
     renderGlossary();
-    document.getElementById("glossary-search").addEventListener("input", function (e) { state.glossaryQuery = e.target.value; renderGlossary(); });
+    var setLetter = function (l) {
+      state.glossaryLetter = l;
+      app.querySelectorAll("[data-letter]").forEach(function (x) { x.setAttribute("aria-pressed", String(x.getAttribute("data-letter") === l)); });
+      renderGlossary();
+    };
+    document.getElementById("glossary-search").addEventListener("input", function (e) { state.glossaryQuery = e.target.value; if (state.glossaryLetter) setLetter(""); else renderGlossary(); });
     app.querySelectorAll("[data-letter]").forEach(function (b) {
       b.addEventListener("click", function () {
-        state.glossaryQuery = ""; document.getElementById("glossary-search").value = ""; renderGlossary();
-        var el = document.getElementById("term-" + b.getAttribute("data-letter"));
-        if (el) el.scrollIntoView({ block: "center" });
+        var l = b.getAttribute("data-letter");
+        state.glossaryQuery = ""; document.getElementById("glossary-search").value = "";
+        setLetter(l === state.glossaryLetter ? "" : l);
       });
     });
   }
@@ -477,9 +481,9 @@
     if (!el) return;
     var q = state.glossaryQuery.trim().toLowerCase(), firstSeen = {};
     var terms = (state.data.glossary || []).slice().sort(function (a, b) { return a.term.localeCompare(b.term); }).filter(function (t) {
-      return !q || (t.term + " " + t.definition).toLowerCase().indexOf(q) > -1;
+      return (!q || (t.term + " " + t.definition).toLowerCase().indexOf(q) > -1) && (!state.glossaryLetter || t.term.charAt(0).toUpperCase() === state.glossaryLetter);
     });
-    document.getElementById("glossary-count").textContent = terms.length + (terms.length === 1 ? " term" : " terms");
+    document.getElementById("glossary-count").textContent = terms.length + (terms.length === 1 ? " term" : " terms") + (state.glossaryLetter ? " with " + state.glossaryLetter : "");
     el.innerHTML = terms.length ? terms.map(function (t) {
       var p = t.post && postById(t.post), L = t.term.charAt(0).toUpperCase(), idAttr = "";
       if (!firstSeen[L]) { firstSeen[L] = 1; idAttr = ' id="term-' + L + '"'; }

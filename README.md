@@ -38,8 +38,17 @@ Unterstützte Bausteine (`blocks`):
 | `gallery` | `images` (Liste mit `src`, `caption`) | Bildergalerie mit Vergrößern |
 | `quiz` | `title`, `questions` (`q`, `options`, `answer`, `explain`) | Interaktives Quiz |
 | `quote` | `content`, `author` | Zitat |
+| `reflection` | `content`, optional `label` | Kasten „What I learned“ mit Somas eigener Meinung (nur echte Sätze von Soma, nie erfinden) |
 | `link` | `url`, `text` | Button mit Link |
 
 Kategorien: Introduction, Markets, Money, Business Cycles, Sustainability, Europe, International, Excursions & Events.
 
 Weitere Felder pro Beitrag: `cover` (Titelbild) oder `coverArt` (`big`, `small`, `tone`: navy, graphite, sand, green, red, sky). Begriffe für das Glossar stehen unter `glossary`.
+
+## Regeln bei jeder neuen Aufgabe (für Claude)
+
+1. **Quiz erweitern:** Für jedes neue Assignment 2 bis 3 neue Fragen in `challenge.questions` in `posts.json` ergänzen (`q`, 4 `options`, `answer`, `explain`, `post` = id des Assignments). Nicht zu schwer, nicht babyleicht.
+2. **What I learned:** Soma nach 2 bis 3 eigenen Sätzen fragen und als Block `reflection` am Ende des Beitrags einfügen (vor dem Quiz-Block). Soma schreibt Deutsch, auf Englisch übersetzen.
+3. **Key terms:** Neue Fachbegriffe in `glossary` ergänzen (`term`, `definition`, `post`).
+4. **How it was made:** Somas Wunsch auf Englisch in `makingOf.prompts` eintragen.
+5. Nach CSS/JS-Änderungen die Version `?v=` in `index.html` erhöhen.

@@ -107,6 +107,7 @@
       case "heading": return '<h2 class="section-heading" id="' + slug(b.text) + '">' + esc(b.text) + "</h2>";
       case "text": return '<div class="prose">' + markdown(b.content) + "</div>";
       case "notes": return '<div class="notes">' + (b.label ? '<span class="label">' + esc(b.label) + "</span>" : "") + '<div class="prose">' + markdown(b.content) + "</div></div>";
+      case "reflection": return b.content ? '<aside class="reflection"><span class="label">' + esc(b.label || "What I learned") + '</span><div class="prose">' + markdown(b.content) + "</div></aside>" : "";
       case "quote": return '<div class="prose"><blockquote>' + inline(toText(b.content)) + (b.author ? "<br>— " + esc(b.author) : "") + "</blockquote></div>";
       case "video":
         var portrait = b.portrait === true;
@@ -557,7 +558,7 @@
 
   function renderPost(id) {
     var post = postById(id);
-    if (!post) { app.innerHTML = '<div class="container"><div class="empty" style="margin-block:96px"><strong>Post not found</strong><a class="link" href="#">Back to the start page</a></div></div>'; return; }
+    if (!post) { app.innerHTML = '<div class="container"><div class="empty" style="margin-block:96px"><h1 style="font-size:1.4rem">Post not found</h1><a class="link" href="#">Back to the start page</a></div></div>'; return; }
     document.title = post.title + " · " + (state.data.site.title || "Economics");
     quizCount = 0;
     var all = posts(), i = all.indexOf(post), newer = all[i - 1], older = all[i + 1];
@@ -821,7 +822,7 @@
   function route() {
     var h = decodeURIComponent(location.hash.replace(/^#/, ""));
     var page = "home";
-    stopChallengeTimer(); game = null; stopHomeFx();
+    stopChallengeTimer(); game = null; stopHomeFx(); state.glossaryLetter = "";
     document.title = (state.data.site && state.data.site.title) || "Economics";
     if (h.indexOf("post-") === 0) { page = "posts"; renderPost(h.slice(5)); }
     else if (h === "making-of") { page = "making-of"; renderMakingOf(); }

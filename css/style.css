@@ -692,3 +692,8 @@ article > .article-head.container, article > .article-cover.container, article >
 /* Key terms: letter filter */
 .az .az-all { width: auto; padding-inline: 10px; margin-right: 4px; }
 .az button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* "What I learned" box */
+.reflection { border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--tile)); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; }
+.reflection .label { display: block; font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 8px; letter-spacing: .01em; }
+.reflection .prose { font-size: 1.05rem; }

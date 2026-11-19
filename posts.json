@@ -870,6 +870,10 @@
       {
         "label": "Video and letter filter",
         "text": "Make the video in \"How Does the Economy Work?\" watchable, because I can't see it. And on the key terms page, picking a letter should show only the terms that start with that letter, not just jump to them."
+      },
+      {
+        "label": "What I learned",
+        "text": "Add a \"What I learned\" box to the assignments with my own opinion, and every time a new assignment is added, also add 2 to 3 new questions to the quiz."
       }
     ]
   },

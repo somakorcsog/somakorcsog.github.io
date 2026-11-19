@@ -741,7 +741,7 @@
     }
   ],
   "makingOf": {
-    "intro": "This website was built with Claude, an AI assistant by Anthropic. I never edited HTML or CSS myself. I wrote prompts, sent my texts, videos and notes, and Claude built and updated the site. All posts live in one simple data file, posts.json, and every change goes online through GitHub Pages.",
+    "intro": "This website was built with Claude, an AI assistant by Anthropic. I never edited HTML or CSS myself. I wrote prompts, sent my texts, videos and notes, and Claude built and updated the site. All posts live in one simple data file, posts.json, and every change goes online through GitHub Pages. The list of prompts below updates with every new prompt, so it always shows the latest changes.",
     "prompts": [
       {
         "label": "The first prompt",

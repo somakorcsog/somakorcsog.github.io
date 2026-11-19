@@ -851,7 +851,12 @@
     state.data = data;
     setupChrome();
     route();
-    window.addEventListener("hashchange", route);
+    var lastHash = location.hash, isList = function (h) { return /^#(posts|topics|topic-)/.test(h); };
+    window.addEventListener("hashchange", function () {
+      var h = location.hash, same = isList(h) && isList(lastHash); lastHash = h;
+      if (document.startViewTransition && !same && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) document.startViewTransition(route);
+      else route();
+    });
   }
 
   fetch("posts.json", { cache: "no-store" })

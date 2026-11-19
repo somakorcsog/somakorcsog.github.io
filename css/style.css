@@ -702,3 +702,13 @@ article > .article-head.container, article > .article-cover.container, article >
 .skip-link { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 999px; background: var(--ink); color: var(--bg); font-weight: 600; text-decoration: none; transition: top .2s; }
 .skip-link:focus { top: 12px; }
 .page-head p { max-width: 62ch; }
+
+/* Soft page transitions (View Transitions API) */
+.nav { view-transition-name: site-nav; }
+::view-transition-old(root) { animation: vt-out .14s ease-in both; }
+::view-transition-new(root) { animation: vt-in .3s .12s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+::view-transition-group(site-nav) { animation: none; }
+::view-transition-old(site-nav) { display: none; }
+::view-transition-new(site-nav) { animation: none; }

@@ -697,3 +697,8 @@ article > .article-head.container, article > .article-cover.container, article >
 .reflection { border-left: 3px solid var(--accent); background: color-mix(in srgb, var(--accent) 7%, var(--tile)); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 22px 26px; }
 .reflection .label { display: block; font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 8px; letter-spacing: .01em; }
 .reflection .prose { font-size: 1.05rem; }
+
+/* Skip link for keyboard users */
+.skip-link { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 16px; border-radius: 999px; background: var(--ink); color: var(--bg); font-weight: 600; text-decoration: none; transition: top .2s; }
+.skip-link:focus { top: 12px; }
+.page-head p { max-width: 62ch; }

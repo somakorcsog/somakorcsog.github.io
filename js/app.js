@@ -421,7 +421,7 @@
       (state.filter !== "all" ? '<button type="button" class="clear-chip" data-clear>Show all assignments <span aria-hidden="true">×</span></button>' : "") +
       '<span class="view-toggle" role="group" aria-label="View"><button type="button" data-view="list" aria-pressed="' + (state.view !== "cards") + '">List</button><button type="button" data-view="cards" aria-pressed="' + (state.view === "cards") + '">Cards</button></span>';
     if (!res.length) {
-      list.innerHTML = '<div class="empty"><strong>No assignments here yet</strong>' + (q ? "Nothing matches “" + esc(state.query) + "”." : "Posts for this topic will appear here.") + "</div>";
+      list.innerHTML = '<div class="empty"><strong>' + (q ? "No matches" : "No assignments here yet") + "</strong>" + (q ? "Nothing matches “" + esc(state.query) + "”." : "Posts for this topic will appear here.") + "</div>";
       return;
     }
     var groups = [], seen = {};
@@ -580,10 +580,7 @@
   function renderMakingOf() {
     var m = state.data.makingOf || { prompts: [] };
     document.title = "How it was made · " + ((state.data.site || {}).title || "Economics");
-    app.innerHTML = '<header class="article-head container"><a class="back" href="#">Start page</a>' +
-      '<div class="tile-topics">How it was made</div><h1>How this website was made.</h1>' +
-      (m.intro ? '<p class="lead">' + esc(m.intro) + "</p>" : "") +
-      '<div class="meta">' + m.prompts.length + " prompts · built with Claude</div></header>" +
+    app.innerHTML = pageHead(m.prompts.length + " prompts · built with Claude", "How this website", m.intro || "", "was made.") +
       '<ol class="prompts container">' + m.prompts.map(function (pr, i) {
         return '<li class="prompt' + (i === 0 ? " first" : "") + '"><div class="prompt-meta"><span class="prompt-num">' + (i + 1) + "</span>" + esc(pr.label || "Prompt") + "</div>" +
           '<div class="prompt-bubble">' + esc(pr.text) + "</div></li>";
@@ -664,6 +661,8 @@
       try { localStorage.setItem("theme", next); } catch (e) {}
     });
 
+    var skip = document.querySelector(".skip-link");
+    if (skip) skip.addEventListener("click", function (e) { e.preventDefault(); app.focus(); });
     var bar = document.getElementById("progress"), navEl = document.querySelector(".nav");
     window.addEventListener("scroll", function () {
       if (navEl) navEl.classList.toggle("scrolled", window.scrollY > 8);
